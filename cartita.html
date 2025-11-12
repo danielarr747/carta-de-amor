@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para mi amor 💖</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(to bottom, #ffd6e0, #ffe6eb);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: "Comic Sans MS", "Segoe Script", cursive;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* corazones flotando */
+    .heart {
+      position: absolute;
+      color: #ff4f8b;
+      font-size: 20px;
+      opacity: 0.8;
+      animation: float 6s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(1); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.3); opacity: 0; }
+    }
+
+    .card {
+      background-color: white;
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      color: #ff4f8b;
+      font-size: 1.4rem;
+      max-width: 600px;
+      z-index: 2;
+    }
+
+    #message {
+      border-right: 3px solid #ff4f8b;
+      white-space: pre-line;
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    button {
+      margin-top: 20px;
+      background-color: #ff85a2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff5e89;
+    }
+
+    /* imagen a pantalla completa */
+    .image-full {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 230, 235, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 2s;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .image-full img {
+      width: 90%;
+      max-width: 700px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .image-full.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+  </style>
+</head>
+<body>
+  <!-- corazones flotando -->
+  <script>
+    for (let i = 0; i < 15; i++) {
+      let heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '💗';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (5 + Math.random() * 5) + 's';
+      document.body.appendChild(heart);
+    }
+  </script>
+
+  <!-- carta -->
+  <div class="card">
+    <div id="message"></div>
+    <br/>
+    <button id="btnVerFoto" style="display:none;">Ver nuestra foto 💞</button>
+  </div>
+
+  <!-- imagen final -->
+  <div class="image-full" id="imageFull">
+    <img src="foto.png" alt="Nosotros" />
+  </div>
+
+  <!-- música -->
+  <audio id="music" src="https://cdn.pixabay.com/audio/2023/03/25/audio_9924d44b65.mp3" preload="auto"></audio>
+
+  <script>
+    const messageText = `Tal vez no es como las páginas que tú programas,
+pero la hice con todo mi amor, solo para decirte
+lo mucho que te amo y lo feliz que soy contigo 💞`;
+    const messageElement = document.getElementById("message");
+    const btnVerFoto = document.getElementById("btnVerFoto");
+    const music = document.getElementById("music");
+    const imageFull = document.getElementById("imageFull");
+
+    let i = 0;
+    function typeWriter() {
+      if (i < messageText.length) {
+        messageElement.textContent += messageText.charAt(i);
+        i++;
+        setTimeout(typeWriter, 70);
+      } else {
+        // mensaje final
+        setTimeout(() => {
+          messageElement.textContent += "\n\nTe amo ❤️";
+          btnVerFoto.style.display = "inline-block";
+          music.play();
+        }, 500);
+      }
+    }
+    window.onload = typeWriter;
+
+    btnVerFoto.onclick = () => {
+      imageFull.classList.add("show");
+    };
+  </script>
+</body>
+</html>
